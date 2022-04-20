@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Калькулятор</title>
+    <!--Google Font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style media="screen">
+    	*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    background: #C0E6C0;
+}
+.container{
+    background-color: #ffffff;
+    padding: 30px 30px;
+    width: 400px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    font-family: 'Poppins',sans-serif;
+    box-shadow: 25px 25px 30px rgba(0,0,0,0.15);
+}
+.container h1{
+	background: #4fae47;
+	color: white;
+	text-align: center;
+	font-size: 23px;
+	letter-spacing: 1px;
+	margin-top: -30px;
+	margin-left: -30px;
+	margin-right: -30px;
+	margin-bottom: 40px;
+}
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.row span{
+    font-weight: 500;
+}
+input[type="range"]{
+    width: 70%;
+    height: 3.5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #dcdcdc;
+    border-radius: 3px;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: #1c1c1c;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#result{
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #0be881;
+}
+#category{
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.display{
+box-shadow: 0 0 20px rgba(0,139,253,0.25);
+margin-bottom: 60px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+			<h1>Калькулятор Индекса массы тела</h1>
+			<div class="display">
+				        <p id="result">20.0</p>
+				        <p id="category">Нормальный вес</p>
+			</div>
+        <div class="row">
+            <input type="range" min="20" max="200" value="20" id="weight" oninput="calculate()">
+            <span id="weight-val">20 кг</span>
+        </div>
+        <div class="row">
+            <input type="range" min="100" max="250" value="100" id="height" oninput="calculate()">
+            <span id="height-val">100 см</span>
+        </div>
+
+
+    </div>
+
+    <!--Script-->
+    <script type="text/javascript">
+function calculate(){
+  //Need to determine the constant of some id functions.
+    var bmi;
+    var result = document.getElementById("result");
+  //The value of the height slider
+    var height = parseInt(document.getElementById("height").value);
+  //The value of the weight slider
+    var weight = parseInt(document.getElementById("weight").value);
+  
+  //The value of height and width should be displayed in the webpage using "textContent".
+    document.getElementById("weight-val").textContent = weight + " кг";
+    document.getElementById("height-val").textContent = height + " см";
+  
+//Now I have added the formula for calculating BMI in "bmi"
+    bmi = (weight / Math.pow( (height/100), 2 )).toFixed(1);
+  //With the help of "textContent" we have arranged to display in the result page of BMI
+    result.textContent = bmi;
+
+  
+  //Now we have to make arrangements to show the text
+  
+  
+  //When the BMI is less than 18.5, you can see the text below
+    if(bmi < 18.5){
+        category = "Дефицит массы тела 😒";
+        result.style.color = "#ffc44d";
+    }
+  
+  //If BMI is >=18.5 and <=24.9
+    else if( bmi >= 18.5 && bmi <= 24.9 ){
+        category = "Нормальный вес 😍";
+        result.style.color = "#0be881";
+    }
+  
+  //If BMI is >= 25 and <= 29.9 
+    else if( bmi >= 25 && bmi <= 29.9 ){
+        category = "Избыточный вес 😮";
+        result.style.color = "#ff884d";
+    }
+
+  //If BMI is >= 30 and <= 34.9 
+    else if( bmi >= 30 && bmi <= 34.9 ){
+        category = "Ожирение 1-й степени 😱";
+        result.style.color = "#ff5e57";
+    }
+
+  //If BMI is >= 35 and <= 39.9 
+    else if( bmi >= 35 && bmi <= 39.9 ){
+        category = "Ожирение 2-й степени 😱";
+        result.style.color = "#ff5e57";
+    }
+  
+
+  //If BMI is <= 40
+    else{
+        category = "Ожирение 3-й степени 😱";
+        result.style.color = "#ff5e57";
+    }
+  //All of the above text is stored in "category".
+
+//Now you have to make arrangements to display the information in the webpage with the help of "textContent"
+    document.getElementById("category").textContent = category;
+}
+    </script>
+</body>
+</html>
